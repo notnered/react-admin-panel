@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { loginFailure, loginRequest, loginSuccess } from './authSlice';
+import { loginFailure, loginRequest, loginSuccess, logout } from './authSlice';
 import { authApi } from '../../api/authApi';
 import Cookies from 'js-cookie';
 
@@ -21,6 +21,11 @@ function* loginWorker(action: ReturnType<typeof loginRequest>) {
     }
 }
 
+export function* logoutWorker() {
+    yield call(authApi.logout);
+}
+
 export function* authSaga() {
     yield takeLatest(loginRequest.type, loginWorker);
+    yield takeLatest(logout.type, logoutWorker);
 }

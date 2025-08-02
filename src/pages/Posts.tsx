@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
-import { Table, Pagination, Typography } from 'antd';
+import { Table, Pagination, Typography, FloatButton } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPostsRequest } from '../store/slices/postSlice';
 import { type RootState } from '../store/store';
+import { logout } from '../store/slices/authSlice';
+import { LogoutOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 
 export default function Posts() {
     const dispatch = useDispatch();
+
     const { items, totalPages, loading } = useSelector(
-        (s: RootState) => s.posts
+        (state: RootState) => state.posts
     );
+
     const [page, setPage] = useState(1);
 
     useEffect(() => {
@@ -37,8 +41,9 @@ export default function Posts() {
                 total={totalPages * 10}
                 pageSize={10}
                 onChange={setPage}
-                style={{ marginTop: 16, textAlign: 'right' }}
+                style={{ marginTop: 16, textAlign: 'right', display: 'flex', justifyContent: 'center' }}
             />
+            <FloatButton icon={<LogoutOutlined />} onClick={() => dispatch(logout())} />
         </div>
     );
 }

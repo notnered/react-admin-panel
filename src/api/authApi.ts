@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 export const BASE_URL = 'http://localhost:3001/api';
 
 export const authApi = {
@@ -34,4 +36,15 @@ export const authApi = {
 
         return res.json();
     },
+
+    async logout() {
+        const token = Cookies.get('access_token');
+        if (!token){
+            return false;
+        }
+
+        Cookies.remove('access_token');
+        Cookies.remove('refresh_token');
+        return true;
+    }
 };
