@@ -6,7 +6,8 @@ import { type RootState } from './store/store';
 import type { JSX } from 'react';
 
 function PrivateRoute({ children }: { children: JSX.Element }) {
-    const isAuth = useSelector((s: RootState) => s.auth.isAuth);
+    const isAuth = useSelector((state: RootState) => state.auth.isAuth);
+    // console.log(isAuth);
     return isAuth ? children : <Navigate to='/login' />;
 }
 

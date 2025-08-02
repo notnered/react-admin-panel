@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthState {
@@ -6,8 +7,10 @@ interface AuthState {
     error: string | null;
 }
 
+const authStatus = Cookies.get('access_token') ? true : false;
+
 const initialState: AuthState = {
-    isAuth: false,
+    isAuth: authStatus,
     loading: false,
     error: null,
 };
