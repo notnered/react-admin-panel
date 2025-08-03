@@ -4,6 +4,8 @@ import Posts from './pages/Posts';
 import { useSelector } from 'react-redux';
 import { type RootState } from './store/store';
 import type { JSX } from 'react';
+import AddPost from './pages/AddPost';
+import EditPost from './pages/EditPost';
 
 function PrivateRoute({ children }: { children: JSX.Element }) {
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
@@ -20,6 +22,22 @@ export default function App() {
                 element={
                     <PrivateRoute>
                         <Posts />
+                    </PrivateRoute>
+                }
+            />
+            <Route
+                path='/posts/add'
+                element={
+                    <PrivateRoute>
+                        <AddPost />
+                    </PrivateRoute>
+                }
+            />
+            <Route
+                path='/posts/edit/:id'
+                element={
+                    <PrivateRoute>
+                        <EditPost />
                     </PrivateRoute>
                 }
             />
