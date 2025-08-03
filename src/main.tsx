@@ -5,12 +5,15 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { BrowserRouter } from 'react-router-dom';
+import { App as AntDesignApp } from 'antd';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <Provider store={store}>
             <BrowserRouter>
-                <App />
+                <AntDesignApp>
+                    <App />
+                </AntDesignApp>
             </BrowserRouter>
         </Provider>
     </StrictMode>
