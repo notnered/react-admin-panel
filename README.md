@@ -1,54 +1,72 @@
-# React + TypeScript + Vite
+# React Admin Panel — Тестовое задание machineheads
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Админ-панель для управления постами через API `machineheads`.  
+Реализованы авторизация по JWT, автоматическое обновление токена, CRUD для постов, а также управление авторами.  
+Проект сделан в рамках тестового задания.
 
-Currently, two official plugins are available:
+## 🚀 Функционал
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Авторизация** через email и пароль
+  - Используется `FormData` для отправки запроса
+  - Хранение токенов в `Cookies`
+  - Автоматическое обновление `access_token` через `refresh_token`
+- **Выход из системы** с очисткой токенов
+- **Управление постами**
+  - Список постов с пагинацией
+  - Добавление нового поста (заголовок, текст, автор, теги, изображение)
+  - Редактирование поста
+  - Удаление поста
+- **Управление авторами**
+  - Загрузка списка авторов из API
+- **UI**
+  - Используется [Ant Design](https://ant.design/) для готовых компонентов
+  - Иконки из `@ant-design/icons`
+  - Плавающие кнопки для быстрого доступа к действиям
+- **Proxy-сервер**
+  - Реализован на `Express` для обхода CORS и работы с локальной разработки
+  - Запускается одновременно с Vite
 
-## Expanding the ESLint configuration
+## 🛠 Стек технологий
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend**
+  - [React 19](https://react.dev/)
+  - [TypeScript](https://www.typescriptlang.org/)
+  - [Redux Toolkit](https://redux-toolkit.js.org/)
+  - [Redux-Saga](https://redux-saga.js.org/)
+  - [Ant Design](https://ant.design/)
+  - [js-cookie](https://github.com/js-cookie/js-cookie)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- **Dev Tools**
+  - [Vite](https://vitejs.dev/)
+  - [Express](https://expressjs.com/) — прокси
+  - [concurrently](https://www.npmjs.com/package/concurrently) — запуск Vite + Proxy одновременно
+  - ESLint, Prettier — линтинг и форматирование
+
+## 📂 Структура проекта
+
+- /src
+- /api - Работа с API (authApi, postsApi, authorsApi, fetchWithAuth)
+- /store - Redux store, слайсы, саги
+- /pages - Страницы приложения (Login, Posts, AddPost, EditPost)
+- /components - Переиспользуемые компоненты
+- proxy.ts - Express-прокси для API
+
+## ⚙️ Запуск проекта
+
+1. **Клонировать репозиторий**
+```bash
+git clone https://github.com/notnered/react-admin-panel.git
+cd react-admin-panel
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+2. **Установить зависимости**
+```bash
+npm install
 ```
+
+3. **Запустить проект в dev-режиме**
+```bash
+npm run dev
+```
+
+Этот скрипт одновременно запустит Vite (localhost:5173) и Proxy (localhost:3001).
